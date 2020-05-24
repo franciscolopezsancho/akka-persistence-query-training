@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory
 
 class ProjectionSpec extends ScalaTestWithActorTestKit(ConfigFactory.load()) with AnyWordSpecLike {
 
-   val logger = LoggerFactory.getLogger(ProjectionSpec.classOf())
+   val logger = LoggerFactory.getLogger(this.getClass().getName())
 
   "A projection" should {
     "be able to read from the journal and println" in {

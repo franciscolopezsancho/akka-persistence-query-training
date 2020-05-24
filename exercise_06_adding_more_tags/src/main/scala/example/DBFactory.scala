@@ -12,9 +12,9 @@ import slick.basic.DatabaseConfig
 import slick.jdbc.JdbcProfile
 import akka.stream.alpakka.slick.scaladsl.SlickSession
 
-object DBHandler{
+object DBFactory{
 
-  val db = DatabaseConfig.forConfig[JdbcProfile](
+  val db: DatabaseConfig[JdbcProfile] = DatabaseConfig.forConfig[JdbcProfile](
     "akka-persistence-jdbc.shared-databases.slick"
   )
   val slickSession: SlickSession = SlickSession.forConfig(db)

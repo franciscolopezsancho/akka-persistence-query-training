@@ -1,31 +1,21 @@
-# AKKA CQRS projections
-The gist of this exercises is to get familiar with event sourcing and projections through [akka persistence](https://doc.akka.io/docs/akka/current/typed/persistence.html)
-
-This assumes some familiarity with Akka Typed (at least what a Behavior is). And also a vague idea of what problem event sourcing and akka persistence try to solve.
-
-In a nutshell we could say that after having some persisted actor in a journal. We'd like to consume those events
-a form a view out of it. Generally we would use the name projection. e.g. We have multiple event on our Box entity, 
-namely the elements that have been added, and we'd like to read all this event's and put them in a table so we can
-query directly how many items have this Box. 
-
-This projection have two main benefits. We are not hitting the original journal so different queries, or reades can
-be done independently. And also defining the format of our projection we'll have an optimized view that align with 
-an specific query with do not have to know before the fact.  
-
-This exercises build upon some knowledge from [akka-persistence-training](https://github.com/franciscolopezsancho/akka-persistence-training/). An the code starts with essentially the same code that workshops ends with. 
-
-Let's get started
-
-from the previous we assume tables have been created
-
-
-2. Let's add now a projection. First just print it.
+##### Adding tags
    
-   a bit more of theory: A projection is a transformation from the Source that is the journal.
-   And when saying source here we use the streams semantics. AS Source -> flow -> Sink. So a projection is a stream. When querying the journal we will read the data as a stream. Here's a bit of info:  https://doc.akka.io/docs/akka/current/stream/stream-flows-and-basics.html
-   You'll basically need to things:
-   The jdbc connector to our mysql you will find in : https://doc.akka.io/docs/alpakka/current/index.html
-   And the akka-persistence-jdbc to which implements an API to consume from a JDBCJournal. All you need to know is here https://doc.akka.io/docs/akka-persistence-jdbc/current/ . 
+From the begining we just extracted the Ids from the journal. This is probably not the most useful info
+you can get out of it. Let's get out the events. Everytime a command is issued if everything goes fine an
+Event is created, applied to the state of the Box and if then still all is good, persisted in the journal. 
+I can get a bit more complicated than this. Check [this](https://doc.akka.io/docs/akka/current/typed/persistence.html#effects-and-side-effects) out if interested. It's worth the reading
+If anything fails within the whole transaction the actor will follow its supervisior decision.
+By default is stop. But can be configured to be otherwise. Have a look [here](https://doc.akka.io/docs/akka/current/typed/fault-tolerance.html) if you'd like to know more.
 
-   The idea here is to consume events from the journal. This will be done createing a Source that comes from the appropriate akka-persistance-jdbc query you decide. I would recommend to retreive the Ids. It's all done for you though. You just need to pick
-   which method from the library you want to use depending on what you want to retrieve.
+Anyways, we wanted the events. And for that we should used same API we are now using but just call to a method
+that could provide us a filter by tag. It's a good time to review what we saw in the exercise_01. A method that says
+`current[X]` will just provide the events at the moment of the query and no more. It's a bounded source. I wouldn't pick that one.
+Have another look at [here](https://doc.akka.io/docs/akka-persistence-jdbc/3.5.2/) to find the way to get those event.
+
+Also I recommend not paying too much attention to the Offset idea you'll see in the above link. That will not matter at the moment.
+
+All this is about the reading part, how to retrieve the events by tag. But the writing part also needs to be add to 
+the `Box`. When issueing events the tag needs to be added. Is quite straight forward. [This](https://doc.akka.io/docs/akka/current/typed/persistence.html#tagging) should do. Just mention that when you see a `Set` of tags may not make much sense but 
+I reckon it will in the next exercise. It's important to highligh that what we are looking for in here is to tag
+per entity. This means we will have to include some sort of identification in the tag that will allow us later on make the query
+for that specific entity.
