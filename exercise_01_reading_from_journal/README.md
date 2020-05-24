@@ -5,7 +5,7 @@
 
    In case you didn't have a look at it first I'll explain what we left off.
 
-   We created a `Box.scala` as an Akka-persistence-entity that accepted messages of the type 'ItemAdded'. The only
+   We created a `Box.scala` as an Akka-persistence-entity that accepted messages of the type 'AddItem'. The only
    thing we were doing with that entity was sending Commands of that type and getting back Accepted or Rejected.  
    Depending of whether the Box was already full or not.
 

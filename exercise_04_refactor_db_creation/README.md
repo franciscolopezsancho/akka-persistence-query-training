@@ -1,5 +1,4 @@
-
-###### Refactor all the things
+##### Refactor all the things
 
 Now that we have an automated test I guess is time for us to clean up. What about you create a couple of classes for that?
 I created one to deal with the DB creation of the tables. I didn't get too fancy just did put there the SQL commands

@@ -114,7 +114,7 @@ class ProjectionSpec
       cart ! Box.CleanBox( probe.ref)
       probe.expectMessage(Box.Accepted(roomLeft = 10))
 
-      implicit val session = DBHandler.slickSession
+      implicit val session = DBFactory.slickSession
 
       eventually(PatienceConfiguration.Timeout(3.seconds)) {
         val future = Slick
