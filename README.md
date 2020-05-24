@@ -25,6 +25,7 @@ from the previous we assume tables have been created
 
 01. 
    
+   Previous to tackle: 
    We should have a database the can hold the journal. This would be located in the provided docker container.
    We are providing some test that start an entity and send some commands to it. The events produced after those 
    commands will generate some entries in the journal. Without the journal test will fail.  

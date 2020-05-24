@@ -1,34 +1,38 @@
 # AKKA CQRS projections
-The gist of this exercises is to get familiar with event sourcing and projections through [akka persistence](https://doc.akka.io/docs/akka/current/typed/persistence.html)
 
-This assumes some familiarity with Akka Typed (at least what a Behavior is). And also a vague idea of what problem event sourcing and akka persistence try to solve.
+#### Before starting
+   This workshop is a continuation of [akka-persistance-training](link...)
 
-In a nutshell we could say that after having some persisted actor in a journal. We'd like to consume those events
-a form a view out of it. Generally we would use the name projection. e.g. We have multiple event on our Box entity, 
-namely the elements that have been added, and we'd like to read all this event's and put them in a table so we can
-query directly how many items have this Box. 
+   In case you didn't have a look at it first I'll explain what we left off.
 
-This projection have two main benefits. We are not hitting the original journal so different queries, or reades can
-be done independently. And also defining the format of our projection we'll have an optimized view that align with 
-an specific query with do not have to know before the fact.  
+   We created a `Box.scala` as an Akka-persistence-entity that accepted messages of the type 'ItemAdded'. The only
+   thing we were doing with that entity was sending Commands of that type and getting back Accepted or Rejected.  
+   Depending of whether the Box was already full or not.
 
-This exercises build upon some knowledge from [akka-persistence-training](https://github.com/franciscolopezsancho/akka-persistence-training/). An the code starts with essentially the same code that workshops ends with. 
+   So we'll start from there here and to test everything is fine we should be running the database that holds the events
+   of the Box. Events that are saved in a table named journal. Without these test will fail. Will be enough to run `docker-compose up`
+   from the docker folder and create the database and tables required.
+   You can find this info in application.conf and init-tables.sql
 
-Let's get started
+  
+#### A bit of understanding
 
-from the previous we assume tables have been created
-
-
-2. Let's add now a projection. First just print it.
+   A projection is a transformation of the journal. In this table you store all the history of all the persistence-entities, our boxes. And to replay history to see the current state of an specific Box part of those events we'll need to be read.  
+   In our case the act of projecting the events to another store is through an Akka-Stream. It quite simple, just a query made to the table that will produce a Source we can consume in a stream fashion
    
-   a bit more of theory: A projection is a transformation from the Source that is the journal.
-   And when saying source here we use the streams semantics. AS Source -> flow -> Sink. So a projection is a stream. When querying the journal we will read the data as a stream. Here's a bit of info:  https://doc.akka.io/docs/akka/current/stream/stream-flows-and-basics.html
-   You'll basically need to things:
-   The jdbc connector to our mysql you will find in : https://doc.akka.io/docs/alpakka/current/index.html
-   And the akka-persistence-jdbc to which implements an API to consume from a JDBCJournal. All you need to know is here https://doc.akka.io/docs/akka-persistence-jdbc/current/ . 
+   Here's more info about streams if you feel curious:  https://doc.akka.io/docs/akka/current/stream/stream-flows-and-basics.html
+   But if you understood so far then don't worry about that.
+  
 
-   The idea here is to consume events from the journal. This will be done createing a Source that comes from the appropriate akka-persistance-jdbc query you decide. I would recommend to retreive the Ids. It's all done for you though. You just need to pick
-   which method from the library you want to use depending on what you want to retrieve.
+#### The task
+   
+   The idea then, is to consume events from the journal. This will be done creating a Source that comes from the appropriate akka-persistance-jdbc query you decide. Using that library you can find three kinds:
+      current[X] which is a bounded stream.
+      event[X] which is an unbounded stream.
+      [x]Ids which is just Ids, bounded or not
+   
+   I would recommend to retreive the Ids. The task would be to print them in the console when running the test.
+   I would care to create an specific class for this. We are just learning how to use the library so I'd just work
+   on `ProjectionSpec`.
 
-
-   The solution you can find it at the init of the next exercise
+      
