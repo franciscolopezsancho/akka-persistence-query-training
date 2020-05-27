@@ -1,5 +1,8 @@
 ##### Adding more tags
 
+##### TO DO:
+
+
 Now that we are getting events by tag, there's an use case will probably happen more often than not.
 You'll need to filter by certain events. This is, instead of all the events of an entity you want
 all the events of all the entities as long they are an specific event. When you understand how this
