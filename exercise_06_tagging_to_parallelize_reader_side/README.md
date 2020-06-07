@@ -1,20 +1,21 @@
 ### Tagging to parallelize the reader side
 
 ##### TO DO:
-    - create a different tag depending on the BoxId and the level of parallelism desired.
+
+* create a different tag depending on the BoxId and the level of parallelism desired.
 
         def calculateTag(paralellism: Int, entityId: String): Int
 
-        Such as:
+    Such as:
+
             assert(Box.calculateTag(2,box0Id) == 0)
             assert(Box.calculateTag(2,box1Id) == 1)
-
-            where box0Id and box1Id are variables we just made up
-            to hold different box's ids. 
+    
+    where `box0Id` and `box1Id` are variables we just made up to hold different box's ids. 
 
         
 
-    - create a test to prove we get two different events with a different tag
+* create a test to prove we get two different events with a different tag
 
          result should contain(s"ItemAdded($box0Id,f000,2)")
          result should not contain(s"ItemAdded($box1Id,f111,2)")

@@ -1,9 +1,10 @@
 ### Writing to a projection
 
 ##### TO DO:
-    - create table
-    - write to that table the events from the journal
-    - check that's the case by getting inside the docker container and making a query to that table
+
+* create table
+* write to that table the events from the journal
+* check that's the case by getting inside the docker container and making a query to that table
 
 ##### Some hints:
 

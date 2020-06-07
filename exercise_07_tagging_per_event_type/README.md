@@ -32,9 +32,10 @@ from the previous we assume tables have been created
 ### Tagging per event type
 
 ##### TO DO:
-    - create a new Command and its event. `CleanBox` -> `BoxCleaned`
-    - create a projection only for these new events
-    - create a test to prove we get only those events in our projection table. Such as:
+
+* create a new Command and its event. `CleanBox` -> `BoxCleaned`
+* create a projection only for these new events
+* create a test to prove we get only those events in our projection table. Such as:
             
 
 ##### Some more explanation 

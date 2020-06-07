@@ -1,8 +1,9 @@
 ### Adding tags
 
 ##### TO DO:
-1. Make sure you add a tag when persist events
-2. Read form the journal events by tag, not just entities Ids as we are currently doing. So you
+
+* Make sure you add a tag when persist events
+* Read form the journal events by tag, not just entities Ids as we are currently doing. So you
 should be checking that you get back `ItemAdded` events from the projection. 
               `result should contain(s"ItemAdded($boxId,fooo,2)")`
 
