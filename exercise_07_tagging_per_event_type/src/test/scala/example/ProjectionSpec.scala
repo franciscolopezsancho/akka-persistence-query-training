@@ -27,28 +27,23 @@ class ProjectionSpec
     with AnyWordSpecLike {
 
 
-      val projectionNames = List("projection1","projection2")
-
+      val tableNames = List("projection1","projection2")
 
       DBFactory.createDefaultTables
-      DBFactory.createProjections(projectionNames)
+      DBFactory.createProjections(tableNames)
 
 
   "The events from the Box Cart" should {
     "be consumed by the event processor that corresponds to its tag" in {
 
-      def calculateTag(paralellism: Int, entityId: String): Int = {
-        entityId.toInt % paralellism
-      }
-
       /// For tag zero   
       val box0Id = 2.toString() // this will be tagged with 0, see assert below
       val box0 = (Box(box0Id,10))
-      assert(calculateTag(2,box0Id) == 0)
+      assert(Box.calculateTag(2,box0Id) == 0)
      // For tag 1
        val box1Id = 1.toString() // this will be tagged with 0, see assert below
       val box1 = (Box(box1Id,9))
-      assert(calculateTag(2,box1Id) == 1)
+      assert(Box.calculateTag(2,box1Id) == 1)
 
       
       val cart0 = testKit.spawn(box0)
@@ -61,16 +56,16 @@ class ProjectionSpec
       cart1 ! Box.AddItem("f111", 2, probe1.ref)
       probe1.expectMessage(Box.Accepted(roomLeft = 7))
       
-      val projection1TableName = projectionNames(1) 
+      val projection1TableName = tableNames(0) 
 
-      val projection0TableName = projectionNames(0)
+      val projection2TableName = tableNames(1)
 
      
 
-      Projector.init("box-tag-0", system, projection0TableName)
+      Projector.init("box-tag-0", system, projection1TableName)
 
 
-      Projector.init("box-tag-1", system, projection1TableName)
+      Projector.init("box-tag-1", system, projection2TableName)
 
      
 
@@ -78,7 +73,7 @@ class ProjectionSpec
 
       eventually(PatienceConfiguration.Timeout(3.seconds)) {
         val future = Slick
-          .source(sql"select * from #$projection0TableName".as[String])
+          .source(sql"select * from #$projection1TableName".as[String])
           .runWith(Sink.seq)
           val result = Await.result(future,1.second)
           result should contain(s"ItemAdded($box0Id,f000,2)")
@@ -87,7 +82,7 @@ class ProjectionSpec
 
       eventually(PatienceConfiguration.Timeout(3.seconds)) {
         val future = Slick
-          .source(sql"select * from #$projection1TableName".as[String])
+          .source(sql"select * from #$projection2TableName".as[String])
           .runWith(Sink.seq)
           val result = Await.result(future,1.second)
           result should not contain(s"ItemAdded($box0Id,f000,2)")
@@ -98,37 +93,5 @@ class ProjectionSpec
 
   }
 
-   "Only the cleaned events from the Box Cart" should {
-    "should be consumed" in {
-
-
-       val boxId = scala.util.Random.nextInt(Int.MaxValue).toString
-
-      val projectionTableName = "projection3"
-      DBFactory.createProjections(List(projectionTableName))
-
-      Projector.init("box-cleaned", system, projectionTableName)
-
-      val cart = testKit.spawn(Box(boxId,10))
-      val probe = testKit.createTestProbe[Box.Confirmation]
-      cart ! Box.AddItem("fiii", 2, probe.ref)
-      probe.expectMessage(Box.Accepted(roomLeft = 8))
-      cart ! Box.CleanBox( probe.ref)
-      probe.expectMessage(Box.Accepted(roomLeft = 10))
-
-      implicit val session = DBFactory.slickSession
-
-      eventually(PatienceConfiguration.Timeout(3.seconds)) {
-        val future = Slick
-          .source(sql"select * from #$projectionTableName".as[String])
-          .runWith(Sink.seq)
-          val result = Await.result(future,1.second)
-          result should not contain(s"ItemAdded($boxId,fiii,2)")
-          result should contain(s"BoxCleaned($boxId)")
-      }
-
-    }
-
-  }
 
 }
