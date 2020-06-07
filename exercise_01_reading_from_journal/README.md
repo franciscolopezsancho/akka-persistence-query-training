@@ -1,3 +1,4 @@
+
 ### Reading from the journal
 
 #### Starting point:
@@ -24,8 +25,9 @@
 
 ##### Some hints:
 The idea then, is to consume events from the journal. This will be done creating a Source that comes from the appropriate [akka-persistance-jdbc](https://doc.akka.io/docs/akka-persistence-jdbc/3.5.2/) query. Using that library you can find two kinds:
-      current[X] which are bounded streams.
-      and the rest like e.g. eventsByTag, which are an unbounded stream.
+     
+   * current[X] which are bounded streams.
+   *  the rest like e.g. eventsByTag, which are an unbounded stream.
    
 Let's start retreiving the Ids. The task would be then to print them in the console when running the test. I wouldn't care to create an specific class for this. We are just learning how to use the library so I'd just write code in the `ProjectionSpec` class.
 
