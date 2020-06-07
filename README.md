@@ -6,8 +6,8 @@ The gist of this exercises is to get familiar with event sourcing and projection
 
 This assumes some familiarity with Akka Typed (at least what a Behavior is). And also a vague idea of what problem event sourcing and akka persistence try to solve.
 
-In a nutshell we could say that after having some persisted actor events in a journal, we'd like to consume those events and form a view out of it. This view we would call it projection. 
-In our use case we have multiple event from our `Box` persistnce entity, namely the elements that have been added, and we'd like to read these event's and put them in a diferent table. We'll explore a three different projections out of this journal.
+In a nutshell we could say that after having some persisted actor events in a journal, we'd like to consume those events and form a view out of it. This view we would call it projection.
+In our use case we have multiple event from our `Box` persistence entity, namely the elements that have been added, and we'd like to read these event's and put them in a diferent table. We'll explore a three different projections out of this journal.
 
 This projections have two main benefits. Performance and flexibility. We are not hitting the original journal so we can scale the readers without compromising the writing. And also we are free to define the format of our projection to align with an specific query with do not have to know before the fact.  
 
