@@ -1,4 +1,4 @@
-##### parallelize reader side
+### Tagging to parallelize the reader side
 
 ##### TO DO:
     - create a different tag depending on the BoxId and the level of parallelism desired.

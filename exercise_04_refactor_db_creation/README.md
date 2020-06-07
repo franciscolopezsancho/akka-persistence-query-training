@@ -1,9 +1,9 @@
-#### Refactor all the things
+### Refactor 
 
 ##### TO DO:
 - refactor in two classes. 
    - DBFactory
-   - Proyector
+   - Projector
 
 ##### Some hints:
 

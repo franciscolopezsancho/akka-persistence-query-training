@@ -1,4 +1,4 @@
-# AKKA CQRS projections
+### Reading from journal
 
 #### Starting point:
 

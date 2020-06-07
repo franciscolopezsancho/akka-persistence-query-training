@@ -1,4 +1,4 @@
-##### Creating the projection and writing to DB
+### Writing to a projection
 
 ##### TO DO:
     - create table
