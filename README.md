@@ -1,3 +1,4 @@
+
 # AKKA CQRS projections
 The gist of this exercises is to get familiar with event sourcing and projections through [akka persistence](https://doc.akka.io/docs/akka/current/typed/persistence.html)
 
@@ -22,9 +23,10 @@ the folder with the same name but with 'solution' in the name instead of 'exerci
 
 The exercises are the following
 
-      01. reading from the journal : Events are persisted in a storage and we'd like to read them
-      02. write to a projection : After reading those events we want to push them to another table, our 'projection'
-      03. automate testing : Once we see we are actually writing in our projection table we will automate a test to prove that
-      04. refactor : Previous steps should be done in the test itself, and not suprisingly refactor is recommended to be done over working tests. So now let's pull out a couple of classes. A DBFactory and a Projector.
-      05. adding tags : A tag is a way of filtering elements and while previously we were just getting the ids of the entities, now we are going to get the events tagged with `Box` in them.
-      06. adding more tags : Finally we'll filter events not only by entity but by event types, we'll create a new event called `BoxCleaned` and we'll try to consume them from the journal.
+   1. reading from the journal : Events are persisted in a storage and we'd like to read them
+   2. write to a projection : After reading those events we want to push them to another table, our 'projection'
+   3.  Automate testing : Once we see we are actually writing in our projection table we will automate a test to prove that
+   4. Refactor : Previous steps should be done in the test itself, and not suprisingly refactor is recommended to be done over working tests. So now let's pull out a couple of classes. A DBFactory and a Projector.
+   5.  Adding tags : A tag is a way of filtering elements and while previously we were just getting the ids of the entities, now we are going to get the events tagged with `Box` in them.
+   6.  Adding tags to parallelize reading : We'll create different tags depending on the id f the `Box` so then when consuming from the database different reader have to consume from different tables/projections.
+   7. Adding tags by event: Finally we'll filter events not only by entity but by event types, we'll create a new event called `BoxCleaned` and we'll try to consume them from the journal to create and specific projection for this type of events.
