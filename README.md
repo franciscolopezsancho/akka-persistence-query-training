@@ -1,6 +1,6 @@
 
 # AKKA CQRS projections
-The gist of this exercises is to get familiar with event sourcing and projections through [akka persistence](https://doc.akka.io/docs/akka/current/typed/persistence.html)
+The gist of this exercises is to get familiar with event sourcing and projections through [akka persistence query](https://doc.akka.io/docs/akka/current/persistence-query.html)
 
 ![projections](projection1.png)
 
