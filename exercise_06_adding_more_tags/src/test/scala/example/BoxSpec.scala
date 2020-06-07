@@ -11,15 +11,7 @@ class BoxSpec extends ScalaTestWithActorTestKit(ConfigFactory.load()) with AnyWo
 
   def randomId = scala.util.Random.nextInt(Int.MaxValue).toString
 
-  // "The box object" should {
-  //   "accept Commands, transform them in events and persist" in {
-  //     val maxCapacity = 10
-  //     val cart = testKit.spawn(Box(randomId,maxCapacity))
-  //     val probe = testKit.createTestProbe[Confirmation]()
-  //     cart ! AddItem("bar",1,probe.ref)
-  //     probe.expectMessage(Accepted(9))
-  //   }
-  // }
+  DBFactory.createTables
 
   "The box object" should {
     "Reject after second item surpasses the max capacity" in {

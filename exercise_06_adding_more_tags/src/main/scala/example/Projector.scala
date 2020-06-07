@@ -21,7 +21,7 @@ object Projector {
 
     implicit val materializer = system
 
-    implicit val slickSession: SlickSession = DBHandler.slickSession
+    implicit val slickSession: SlickSession = DBFactory.slickSession
 
     val source: Source[EventEnvelope,NotUsed] =
       query.eventsByTag(tag, Offset.noOffset)

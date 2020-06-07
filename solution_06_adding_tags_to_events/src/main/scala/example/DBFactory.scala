@@ -14,24 +14,34 @@ import akka.stream.alpakka.slick.scaladsl.SlickSession
 
 object DBFactory{
 
-  val db: DatabaseConfig[JdbcProfile] = DatabaseConfig.forConfig[JdbcProfile](
+  val db = DatabaseConfig.forConfig[JdbcProfile](
     "akka-persistence-jdbc.shared-databases.slick"
   )
   val slickSession: SlickSession = SlickSession.forConfig(db)
 
-  def createTables(): Unit = {
-    Await.ready(slickSession.db.run(dropTables), 30.seconds)
+  def createProjections(projectionTables: List[String]): Unit = {
+    Await.ready(slickSession.db.run(dropProjections(projectionTables)), 30.seconds)
+    projectionTables.map{tableName => 
+      Await.ready(slickSession.db.run(createProjection(tableName)), 30.seconds)
+    }
+  }
+
+  def createDefaultTables: Unit = {
+    Await.ready(slickSession.db.run(dropDefaultTables), 30.seconds)
     Await.ready(slickSession.db.run(createJournal), 30.seconds)
-    Await.ready(slickSession.db.run(createProjection), 30.seconds)
     Await.ready(slickSession.db.run(createSnapshot), 30.seconds)
   }
 
-  def dropTables: DBIO[Int] = sqlu"""
-    DROP TABLE IF EXISTS journal, snapshot, my_projection;
+  def dropDefaultTables: DBIO[Int] = sqlu"""
+    DROP TABLE IF EXISTS journal, snapshot;
+    """ 
+
+  def dropProjections(projectionTableNames: List[String]): DBIO[Int] = sqlu"""
+    DROP TABLE IF EXISTS #${projectionTableNames.mkString(", ")};
     """
 
-  val createProjection: DBIO[Int] = sqlu"""
-    CREATE TABLE IF NOT EXISTS my_projection (
+  def createProjection(tableName: String): DBIO[Int] = sqlu"""
+    CREATE TABLE IF NOT EXISTS #$tableName (
         event VARCHAR(255) NOT NULL
     );
     """

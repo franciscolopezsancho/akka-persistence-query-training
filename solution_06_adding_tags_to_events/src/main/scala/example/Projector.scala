@@ -9,11 +9,13 @@ import akka.NotUsed
 import akka.stream.alpakka.slick.scaladsl.Slick
 import slick.dbio.DBIO
 import slick.jdbc.MySQLProfile.api._
+import akka.persistence.query.Offset
+import akka.persistence.query.EventEnvelope
 
 
 object Projector {
 
-  def init(tag: String, system: ActorSystem[_]) = {
+  def init(tag: String, system: ActorSystem[_], tableName: String) = {
     val query = PersistenceQuery(system)
       .readJournalFor[JdbcReadJournal](JdbcReadJournal.Identifier)
 
@@ -21,16 +23,18 @@ object Projector {
 
     implicit val slickSession: SlickSession = DBFactory.slickSession
 
-    val source: Source[String,NotUsed] =
-      query.persistenceIds()
+    val source: Source[EventEnvelope,NotUsed] =
+      query.eventsByTag(tag, Offset.noOffset)
 
-    source.runWith(
+      
+
+    source.log("################ yo").runWith(
       // add an optional first argument to specify the parallelism factor (Int)
-      Slick.sink(ids => insertEvent(ids))
+      Slick.sink(event => insertEvent(event.event.toString(), tableName))
     )
   }
 
-  def insertEvent(event: String): DBIO[Int] =
-    sqlu"INSERT INTO my_projection VALUES($event)"
+  def insertEvent(event: String, tableName: String): DBIO[Int] =
+    sqlu"INSERT INTO #$tableName VALUES($event)"
 
 }

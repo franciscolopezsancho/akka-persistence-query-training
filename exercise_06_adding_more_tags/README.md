@@ -3,7 +3,8 @@
 ##### TO DO:
     - create a new Command and its event. `CleanBox` -> `BoxCleaned`
     - create a projection only for these new events
-    - create a test to prove we get only those events in our projection table 
+    - create a test to prove we get only those events in our projection table. Such as:
+            
 
 ##### Some more explanation 
 

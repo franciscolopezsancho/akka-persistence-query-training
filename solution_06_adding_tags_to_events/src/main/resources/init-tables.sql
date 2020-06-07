@@ -21,9 +21,3 @@ CREATE TABLE IF NOT EXISTS snapshot (
   snapshot BLOB NOT NULL,
   PRIMARY KEY (persistence_id, sequence_number)
 );
-
-DROP TABLE IF EXISTS my_projection;
-
-CREATE TABLE IF NOT EXISTS my_projection (
-        event VARCHAR(255) NOT NULL
-)

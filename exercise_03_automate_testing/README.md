@@ -2,7 +2,7 @@
 
 ##### TO DO:
     - (not to do) instead of manually go to the DB to check we are inserting
-    - create a test to check that's the case
+    - create a test to check that's the case. Such as when reading from `my_projection` then `result should contain(s"Box|$boxId")`
 
 ##### Some hints:
 

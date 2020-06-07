@@ -32,6 +32,7 @@ class ProjectionSpec
 
       val boxId = scala.util.Random.nextInt(Int.MaxValue).toString
 
+      DBFactory.dropTables
       DBFactory.createTables
 
       Projector.init("boxes", system)
@@ -41,7 +42,7 @@ class ProjectionSpec
       cart ! Box.AddItem("fooo", 2, probe.ref)
       probe.expectMessage(Box.Accepted(roomLeft = 8))
 
-      implicit val session = DBHandler.slickSession
+      implicit val session = DBFactory.slickSession
 
 
       eventually(PatienceConfiguration.Timeout(10.seconds)) {
