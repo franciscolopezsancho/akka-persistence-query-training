@@ -17,7 +17,7 @@
   
 
 ##### TO DO:
-   - Check that we have in place a working `Box`. This is a green on tests in `BoxSpec`
+   - Check that we have in place a working `Box`. This means getting green on the tests in `BoxSpec`
    - Spin up the docker container with a mysql database in it and create the required tables from `init-tables`
    - `ProjectionSpec` should be red but that's just a hint for you were to start.
    
