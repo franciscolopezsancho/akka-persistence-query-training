@@ -6,13 +6,10 @@
    thing we were doing to that entity was sending Commands of that type and getting back Accepted or Rejected.  
    Depending of whether the Box was already full or not.
 
-   So we'll start from there here and to test everything is fine we should start the database that will hold the events of the Box. Events are saved in a table named journal. Without the DB running test will fail. Will be enough to run `docker-compose up` from the docker folder and create the database and tables required.
-   You can find this info in application.conf and init-tables.sql. Then try to run the test and if green in `BoxSpec` you're all sorted. `ProjectionSpec` should be red but that's just a hint for you were to start.
-
   
 #### A bit context before the task
 
-   We will call projection to a transformation of the journal. In this journal you store all the history of all the persistence-entities, our boxes in this case. And to replay history to see the current state of an specific Box part of those events we'll need to be read.  
+   We will call projection to a transformation of the journal. In this journal it's stored all the history, the events, of all the persistence-entities, our boxes in this case. To replay history to see the current state of an specific `Box` part of those events we'll need to be read.  
    In our case the act of projecting the events to another store is through an Akka-Stream. It quite simple, just a query made to the table through the already existing API will produce a Source we can consume in a stream fashion
    
    Here's more info about streams if you feel curious:  https://doc.akka.io/docs/akka/current/stream/stream-flows-and-basics.html
@@ -20,7 +17,9 @@
   
 
 ##### TO DO:
-   - retreive the entitie's Ids from the journal and print them
+   - Check that we have in place a working `Box`. This is a green on tests in `BoxSpec`
+   - Spin up the docker container with a mysql database in it and create the required tables from `init-tables`
+   - `ProjectionSpec` should be red but that's just a hint for you were to start.
    
 
 ##### Some hints:
