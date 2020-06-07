@@ -1,4 +1,4 @@
-#### Adding tags
+### Adding tags
 
 ##### TO DO:
 1. Make sure you add a tag when persist events

@@ -1,4 +1,4 @@
-##### Automate testing
+### Automate testing
 
 ##### TO DO:
     - (not to do) instead of manually go to the DB to check we are inserting

@@ -1,4 +1,4 @@
-### Reading from journal
+### Reading from the journal
 
 #### Starting point:
 

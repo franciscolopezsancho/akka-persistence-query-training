@@ -11,7 +11,6 @@ class BoxSpec extends ScalaTestWithActorTestKit(ConfigFactory.load()) with AnyWo
 
   def randomId = scala.util.Random.nextInt(Int.MaxValue).toString
 
-  DBFactory.dropTables
   DBFactory.createTables
 
   "The box object" should {

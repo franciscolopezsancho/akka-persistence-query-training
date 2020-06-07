@@ -32,7 +32,6 @@ class ProjectionSpec
 
       val boxId = scala.util.Random.nextInt(Int.MaxValue).toString
 
-      DBFactory.dropTables
       DBFactory.createTables
 
       Projector.init("boxes", system)
