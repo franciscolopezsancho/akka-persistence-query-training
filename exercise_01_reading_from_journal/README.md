@@ -6,10 +6,8 @@
    thing we were doing to that entity was sending Commands of that type and getting back Accepted or Rejected.  
    Depending of whether the Box was already full or not.
 
-   So we'll start from there here and to test everything is fine we should start the database that will hold the events
-   of the Box. Events are saved in a table named journal. Without the DB running test will fail. Will be enough to run `docker-compose up`
-   from the docker folder and create the database and tables required.
-   You can find this info in application.conf and init-tables.sql. Then try to run the test and if green you're all sorted.
+   So we'll start from there here and to test everything is fine we should start the database that will hold the events of the Box. Events are saved in a table named journal. Without the DB running test will fail. Will be enough to run `docker-compose up` from the docker folder and create the database and tables required.
+   You can find this info in application.conf and init-tables.sql. Then try to run the test and if green in `BoxSpec` you're all sorted. `ProjectionSpec` should be red but that's just a hint for you were to start.
 
   
 #### A bit context before the task

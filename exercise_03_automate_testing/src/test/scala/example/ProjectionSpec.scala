@@ -18,12 +18,13 @@ import akka.NotUsed
 import akka.stream.alpakka.slick.scaladsl.Slick
 import slick.dbio.DBIO
 import slick.jdbc.MySQLProfile.api._
+import org.slf4j.LoggerFactory
 
 
 class ProjectionSpec extends ScalaTestWithActorTestKit(ConfigFactory.load()) with AnyWordSpecLike {
 
 
- val logger = LoggerFactory.getLogger(ProjectionSpec.classOf())
+ val logger = LoggerFactory.getLogger(classOf[ProjectionSpec])
 
   "A projection" should {
     "be able to read from the journal and println" in {
@@ -57,7 +58,7 @@ class ProjectionSpec extends ScalaTestWithActorTestKit(ConfigFactory.load()) wit
       )
       
       Thread.sleep(3000)
-      assert(fail())
+      assert(fail())//TODO check in here that we actually have those values in 'my_projection' table  
   }
 
    def insertEvent(event: String): DBIO[Int] =

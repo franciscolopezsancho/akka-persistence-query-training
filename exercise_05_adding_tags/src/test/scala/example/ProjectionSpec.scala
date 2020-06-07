@@ -32,7 +32,7 @@ class ProjectionSpec
 
       val boxId = scala.util.Random.nextInt(Int.MaxValue).toString
 
-      DBHandler.createTables
+      DBFactory.createTables
 
       Projector.init("boxes", system)
 
@@ -46,7 +46,7 @@ class ProjectionSpec
 
       eventually(PatienceConfiguration.Timeout(10.seconds)) {
         val future = Slick
-          .source(sql"select * from projection".as[String])
+          .source(sql"select * from my_projection".as[String])
           .runWith(Sink.seq)
           val result = Await.result(future,1.second)//TODO avoid await as I already have eventually
           result should contain(s"Box|$boxId")

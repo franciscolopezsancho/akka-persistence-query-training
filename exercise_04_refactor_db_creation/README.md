@@ -3,7 +3,7 @@
 ##### TO DO:
 - refactor in two classes. 
    - DBFactory
-   - Projector
+   - Proyector
 
 ##### Some hints:
 

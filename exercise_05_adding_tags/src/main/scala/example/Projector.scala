@@ -31,6 +31,6 @@ object Projector {
   }
 
   def insertEvent(event: String): DBIO[Int] =
-    sqlu"INSERT INTO projection VALUES($event)"
+    sqlu"INSERT INTO my_projection VALUES($event)"
 
 }
