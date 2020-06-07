@@ -2,6 +2,8 @@
 # AKKA CQRS projections
 The gist of this exercises is to get familiar with event sourcing and projections through [akka persistence](https://doc.akka.io/docs/akka/current/typed/persistence.html)
 
+![projections](projection1.png)
+
 This assumes some familiarity with Akka Typed (at least what a Behavior is). And also a vague idea of what problem event sourcing and akka persistence try to solve.
 
 In a nutshell we could say that after having some persisted actor events in a journal. We'd like to consume those events
