@@ -17,8 +17,12 @@
 
 * create a test to prove we get two different events with a different tag
 
-         result should contain(s"ItemAdded($box0Id,f000,2)")
+From `projection0`
+
+         result should contain(s"ItemAdded($box0Id,f000,2)") 
          result should not contain(s"ItemAdded($box1Id,f111,2)")
+
+From `projection1`
 
          result should not contain(s"ItemAdded($box0Id,f000,2)")
          result should contain(s"ItemAdded($box1Id,f111,2)")
