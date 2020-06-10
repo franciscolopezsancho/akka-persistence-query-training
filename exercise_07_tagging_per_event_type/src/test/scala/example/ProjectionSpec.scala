@@ -27,7 +27,7 @@ class ProjectionSpec
     with AnyWordSpecLike {
 
 
-      val tableNames = List("projection1","projection2")
+      val tableNames = List("projection0","projection1")
 
       DBFactory.createDefaultTables
       DBFactory.createProjections(tableNames)
